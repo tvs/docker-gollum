@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-MAINTAINER Nathan Smith <nathansmith22@gmail.com>
+MAINTAINER Travis Hall <trvs.hll@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -13,7 +13,7 @@ RUN rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 # Install rvm and ruby
 RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-RUN \curl -L https://get.rvm.io | sudo bash -s stable --ruby
+RUN \curl -L https://get.rvm.io | sudo bash -s stable --ruby=2.4.0
 
 # Initialize wiki data
 RUN mkdir /root/wikidata
@@ -23,7 +23,7 @@ RUN git init /root/wikidata
 EXPOSE 4567
 
 ADD ./Gemfile /root/
-RUN /bin/bash -c "source /usr/local/rvm/scripts/rvm && rvm --default use ruby-2.3.0 && cd /root && gem install bundler && bundle install && cd -"
+RUN /bin/bash -c "source /usr/local/rvm/scripts/rvm && rvm --default use ruby-2.4.0 && cd /root && gem install bundler && bundle install && cd -"
 
 ADD ./run_gollum.sh /root/
 ENTRYPOINT ["/root/run_gollum.sh"]
